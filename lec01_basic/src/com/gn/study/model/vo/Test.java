@@ -1,6 +1,7 @@
 package com.gn.study.model.vo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Test {
 	private int testNo;
@@ -35,7 +36,9 @@ public class Test {
 
 	@Override
 	public String toString() {
-		return "번호:" + testNo + ", 이름:" + testName + ", 등록일:" + testDate;
+		DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String result1 = dtf1.format(testDate);
+		return "번호:" + testNo + ", 이름:" + testName + ", 등록일:" + result1;
 	}
 
 	
