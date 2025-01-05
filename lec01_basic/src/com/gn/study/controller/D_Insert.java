@@ -24,7 +24,7 @@ public class D_Insert {
 			// 6. 자동차에 쿼리문 실어보내기
 //			String sql = "insert into test(t_name) values('테스트4')";
 			String sql = "insert into test "
-					+"values(5, '테스트5' ,NOW())";
+					+"values(7, '테스트7' ,NOW())";
 			int result = stmt.executeUpdate(sql);
 			// 7. 결과 확인
 			if(result > 0) {
