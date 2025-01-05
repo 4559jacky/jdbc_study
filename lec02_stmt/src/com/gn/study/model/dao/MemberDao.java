@@ -11,6 +11,34 @@ import com.gn.study.model.vo.Member;
 
 public class MemberDao {
 	
+	// 회원 탈퇴
+	public int deleteMember(String memberId) {
+		Connection conn = null;
+		Statement stmt = null;
+		int result = 0;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			String sql = "delete from member "
+					+"where m_id = '"+memberId+"'";
+			result = stmt.executeUpdate(sql);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	
 	// 회원 아이디 수정
 	public int updateMemberId(String oldMemberId, String newMemberId) {
 		Connection conn = null;

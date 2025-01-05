@@ -33,10 +33,33 @@ public class MemberMenu {
 				case 3 : selectMemberId(); break;
 				case 4 : selectMemberName(); break;
 				case 5 : updateMemberInfo(); break;
-				case 6 : break;
+				case 6 : deleteMember(); break;
 				case 0 : System.out.println("잘가용~ 안농~~"); return;
 				default : System.out.println("잘못된 번혼디용ㅠㅠ");
 			}
+		}
+	}
+	
+	// 회원 탈퇴
+	public void deleteMember() {
+		System.out.println("=== 회원 탈퇴 ===");
+		System.out.print("아이디 : ");
+		String memberId = sc.nextLine();
+		System.out.print("비밀번호 : ");
+		String memberPw = sc.next();
+		sc.nextLine();
+		boolean result = mc.CheckMember(memberId, memberPw);
+		if(result == true) {
+			System.out.print("정말 회원 탈퇴를 하시겠습니까?(y/n) : ");
+			String answer = sc.nextLine();
+			if(answer.equals("y")) {
+				mc.deleteMember(memberId);
+				System.out.println("성공적으로 회원이 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
+			} else {
+				System.out.println("회원 탈퇴를 중지합니다.");
+			}
+		} else {
+			System.out.println("아이디 또는 비밀번호를 확인해주세요.");
 		}
 	}
 	

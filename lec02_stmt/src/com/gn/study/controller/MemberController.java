@@ -7,6 +7,13 @@ import com.gn.study.model.vo.Member;
 
 public class MemberController {
 	
+	// 회원 탈퇴
+	public int deleteMember(String memberId) {
+		int result = new MemberDao().deleteMember(memberId);
+		return result;
+	}
+	
+	
 	// 회원 아이디 수정
 	public int updateMemberId(String oldMemberId, String newMemberId) {
 		int result = new MemberDao().updateMemberId(oldMemberId, newMemberId);
