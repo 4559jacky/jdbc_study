@@ -66,7 +66,5 @@ public class MemberController {
 		int result = new MemberDao().insertMember(m);
 		return result;
 	}
-	
-	
 }
 								
