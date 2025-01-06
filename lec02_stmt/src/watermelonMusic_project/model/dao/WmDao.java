@@ -109,6 +109,46 @@ public class WmDao {
 		return result;
 	}
 	
+	// 재생횟수 Top10 조회
+	public List<WmSong> selectTop10Song() {
+		List<WmSong> list = new ArrayList<WmSong>();
+		// DB에 SQL문 요청
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/watermelon_music";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			String sql = "SELECT * FROM wm_song "
+					+ "	ORDER BY m_repeat DESC "
+					+ "	LIMIT 10";
+			rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				WmSong s = new WmSong();
+				s.setM_no(rs.getInt("m_no"));
+				s.setM_title(rs.getString("m_title"));
+				s.setM_artist(rs.getString("m_artist"));
+				s.setM_repeat(rs.getInt("m_repeat"));
+				list.add(s);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
 	
 	
 	// 전체 회원 조회

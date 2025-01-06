@@ -18,8 +18,8 @@ public class WmMenu {
 			System.out.println("=== 회원 관리 프로그램 ===");
 			System.out.println("1. 회원가입");
 			System.out.println("2. 로그인");
-			System.out.println("3. 회원 아이디 찾기");
-			System.out.println("4. 회원 비밀번호 찾기");
+//			System.out.println("3. 회원 아이디 찾기");
+//			System.out.println("4. 회원 비밀번호 찾기");
 			System.out.println("0. 프로그램 종료");
 			
 			System.out.print("OPTION : ");
@@ -95,7 +95,7 @@ public class WmMenu {
 		while(true) {
 			System.out.println("=== 관리자 메뉴 ===");
 			System.out.println("1. 음악 추가");
-//			System.out.println("2. 음악 인기 순위 조회");
+			System.out.println("2. 음악 인기 순위 조회");
 			System.out.println("3. 회원 전체 조회");
 			System.out.println("4. 회원 아이디 조회");
 			System.out.println("5. 회원 강제 탈퇴");
@@ -103,10 +103,9 @@ public class WmMenu {
 			
 			System.out.print("OPTION : ");
 			int menu = sc.nextInt();
-			sc.nextLine();
 			switch(menu) {
 				case 1 : insertSong(); break;
-				case 2 : break;
+				case 2 : selectTop10Song(); break;
 				case 3 : searchUserAll(); break;
 				case 4 : serachUserForId(); break;
 				case 5 : deleteUserAdmin(); break;
@@ -128,6 +127,19 @@ public class WmMenu {
 			System.out.println("음악이 등록되었습니다.");
 		} else {
 			System.out.println("음악등록에 실패하였습니다.");
+		}
+	}
+	
+	// 재생횟수 순 탑10 노래
+	public void selectTop10Song() {
+		System.out.println("=== 실시간 TOP 10 ===");
+		List<WmSong> list = mc.selectTop10Song();
+		if(list.isEmpty()) {
+			System.out.println("조회된 결과가 없습니다.");
+		} else {
+			for(WmSong s : list) {
+				System.out.println(s);
+			}
 		}
 	}
 	
@@ -195,7 +207,7 @@ public class WmMenu {
 				case 1 : showPlayList(); break;
 				case 2 : playSongByNo(); break;
 				case 3 : updateUserName(user); break;
-				case 4 : deleteUser(user); break;
+				case 4 : deleteUser(user); return;
 				case 0 : System.out.println("잘가용~ 안농~~"); return;
 				default : System.out.println("잘못된 번혼디용ㅠㅠ");
 			}
@@ -256,7 +268,6 @@ public class WmMenu {
 	
 	// 회원 탈퇴
 	public void deleteUser(WmUser user) {
-		sc.nextLine();
 		System.out.println("=== 회원 탈퇴 ===");
 		while(true) {
 			System.out.print("비밀번호를 입력하세요 : ");
@@ -265,6 +276,7 @@ public class WmMenu {
 				int result = mc.deleteUser(user);
 				if(result > 0) {
 					System.out.println("회원이 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
+					break;
 				} else {
 					System.out.println("회원탈퇴에 실패하였습니다.");
 				}

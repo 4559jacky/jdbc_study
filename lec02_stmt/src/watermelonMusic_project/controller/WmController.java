@@ -30,6 +30,12 @@ public class WmController {
 		return result;
 	}
 	
+	// 재생횟수순 탑10 노래
+	public List<WmSong> selectTop10Song() {
+		List<WmSong> list = wd.selectTop10Song();
+		return list;
+	}
+	
 	
 	// 전체 회원 조회
 	public List<WmUser> searchUserAll() {
