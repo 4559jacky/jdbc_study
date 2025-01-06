@@ -38,6 +38,80 @@ public class MemberDao {
 		return result;
 	}
 	
+	// 회원 아이디와 비밀번호로 정보 조회
+	public Member selectMemberOneByIdAndPw(String memberId, String memberPw) {
+		Member m = null;
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			String sql = "select * from member where m_id = '"
+					+ memberId + "' and m_pw = '" + memberPw + "'";
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				m = new Member();
+				m.setMemberNo(rs.getInt("m_no"));
+				m.setMemberId(rs.getString("m_id"));
+				m.setMemberPw(rs.getString("m_pw"));
+				m.setMemberName(rs.getString("m_name"));
+				m.setMemberEmail(rs.getString("m_email"));
+				m.setMemberPhone(rs.getString("m_phone"));
+				m.setMemberGender(rs.getString("m_gender"));
+				m.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				m.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return m;
+	}
+	
+	// 회원 정보 전체 수정
+	public int updateMemberInfo(String memberId, String name, String phone, String email) {
+		Connection conn = null;
+		Statement stmt = null;
+		int result = 0;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			String sql = "update member "
+					+"set m_name = '"+name+"' "
+					+", m_phone = '"+phone+"' "
+					+", m_email = '"+email+"' "
+					+"where m_id = '"+memberId+"'";
+			result = stmt.executeUpdate(sql);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	
 	// 회원 아이디 수정
 	public int updateMemberId(String oldMemberId, String newMemberId) {

@@ -13,6 +13,17 @@ public class MemberController {
 		return result;
 	}
 	
+	// 회원 아이디와 비밀번호로 정보 조회
+	public Member selectMemberOneByIdAndPw(String memberId, String memberPw) {
+		Member m = new MemberDao().selectMemberOneByIdAndPw(memberId, memberPw);
+		return m;
+	}
+	
+	// 회원 정보 전체 수정
+	public int updateMemberInfo(String memberId, String name, String phone, String email) {
+		int result = new MemberDao().updateMemberInfo(memberId, name, phone, email);
+		return result;
+	}
 	
 	// 회원 아이디 수정
 	public int updateMemberId(String oldMemberId, String newMemberId) {
@@ -57,8 +68,9 @@ public class MemberController {
 	}
 	
 	public Member selectMemberId(String memberId) {
-		Member m = new MemberDao().selectMemberId(memberId);
-		return m;
+//		Member m = new MemberDao().selectMemberId(memberId);
+//		return m;
+		return new MemberDao().selectMemberId(memberId);
 	}
 	
 	public List<Member> selectMemberAll() {

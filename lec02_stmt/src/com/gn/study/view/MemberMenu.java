@@ -32,7 +32,8 @@ public class MemberMenu {
 				case 2 : selectMemberAll(); break;
 				case 3 : selectMemberId(); break;
 				case 4 : selectMemberName(); break;
-				case 5 : updateMemberInfo(); break;
+//				case 5 : updateMemberInfo(); break;
+				case 5 : updateMember(); break;
 				case 6 : deleteMember(); break;
 				case 0 : System.out.println("잘가용~ 안농~~"); return;
 				default : System.out.println("잘못된 번혼디용ㅠㅠ");
@@ -63,7 +64,41 @@ public class MemberMenu {
 		}
 	}
 	
-	// 회원 정보 수정
+	// 회원 정보 수정(강사님 버전)
+		public void updateMember() {
+			System.out.println("=== 회원 정보 수정 ===");
+			System.out.print("아이디 : ");
+			String memberId = sc.nextLine();
+			System.out.print("비밀번호 : ");
+			String memberPw = sc.next();
+			Member m = mc.selectMemberOneByIdAndPw(memberId, memberPw);
+			sc.nextLine();
+			if(m != null) {
+				System.out.println(m);
+				// 이메일, 전화번호, 이름 -> 수정
+				System.out.println("이름 : ");
+				String name = sc.next();
+				System.out.println("전화번호 : ");
+				String phone = sc.next();
+				System.out.println("이메일 : ");
+				String email = sc.next();
+				
+				int result = mc.updateMemberInfo(memberId, name,phone,email);
+				if(result > 0) {
+					System.out.println("수정 성공!");
+				} else {
+					System.out.println("수정 실패ㅜㅜ");
+				}
+	
+			} else {
+				System.out.println("잘못된 아이디 혹은 비밀번호입니다.");
+			}
+		}
+	
+	
+	
+	
+	// 회원 정보 수정(내 버전)
 	public void updateMemberInfo() {
 		System.out.println("=== 회원 정보 수정 ===");
 		System.out.print("아이디 : ");
@@ -74,21 +109,21 @@ public class MemberMenu {
 		if(result == true) {
 			while(true) {
 				System.out.println("=== 회원 정보 수정 ===");
-				System.out.println("1. 아이디 변경");
-				System.out.println("2. 비밀번호 변경");
-				System.out.println("3. 회원 이름 수정");
-				System.out.println("4. 이메일 변경");
-				System.out.println("5. 전화번호 수정");
+//				System.out.println("1. 아이디 변경");
+				System.out.println("1. 비밀번호 변경");
+				System.out.println("2. 회원 이름 수정");
+				System.out.println("3. 이메일 변경");
+				System.out.println("4. 전화번호 수정");
 				System.out.println("0. 회원정보 수정 종료하기");
 				
 				System.out.println("수정할 항목 : ");
 				int menu = sc.nextInt();
 				switch(menu) {
-					case 1 : updateMemberId(memberId); break;
-					case 2 : updateMemberPw(memberId); break;
-					case 3 : updateMemberName(memberId); break;
-					case 4 : updateMemberEmail(memberId); break;
-					case 5 : updateMemberPhone(memberId); break;
+//					case 1 : updateMemberId(memberId); break;
+					case 1 : updateMemberPw(memberId); break;
+					case 2 : updateMemberName(memberId); break;
+					case 3 : updateMemberEmail(memberId); break;
+					case 4 : updateMemberPhone(memberId); break;
 					case 0 : System.out.println("잘가용~ 안농~~"); return;
 					default : System.out.println("잘못된 번혼디용ㅠㅠ");
 				}
@@ -223,9 +258,9 @@ public class MemberMenu {
 		
 		int result = mc.insertMember(memberId, memberPw, memberName, memberEmail, memberPhone, memberGender);
 		if(result > 0) {
-			System.out.println("성공!!");
+			System.out.println("회원가입에 성공하였습니다.");
 		} else {
-			System.out.println("실패ㅠㅠ");
+			System.out.println("회원가입 실패 \n"+memberId+"는 이미 사용중인 아이디입니다. 다른 아이디를 입력해주세요.");
 		}
 	}
 	

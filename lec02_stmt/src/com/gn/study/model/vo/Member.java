@@ -114,7 +114,7 @@ public class Member {
 	@Override
 	public String toString() {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		return "회원 [번호=" + memberNo + ", 아이디=" + memberId +
+		return "회원 [사용자 번호=" + memberNo + ", 아이디=" + memberId +
 				", 비밀번호=" + memberPw +
 				", 이름=" + memberName +
 				", 이메일=" + memberEmail +
