@@ -137,8 +137,11 @@ public class WmMenu {
 		if(list.isEmpty()) {
 			System.out.println("조회된 결과가 없습니다.");
 		} else {
-			for(WmSong s : list) {
-				System.out.println(s);
+//			for(WmSong s : list) {
+//				System.out.println(s);
+//			}
+			for(int i=0; i<list.size(); i++) {
+				System.out.println((i+1)+". " + list.get(i).toStringdingdong());
 			}
 		}
 	}

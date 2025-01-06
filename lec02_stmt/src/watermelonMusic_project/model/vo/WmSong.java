@@ -49,6 +49,12 @@ public class WmSong {
 				", 재생횟수 : " + m_repeat + "]";
 	}
 	
+	public String toStringdingdong() {
+		return " [제목 : " + m_title +
+				"], [아티스트 : " + m_artist +
+				"], [재생횟수 : " + m_repeat + "]";
+	}
+	
 	
 	
 }
