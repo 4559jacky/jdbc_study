@@ -110,6 +110,7 @@ public class MemberMenu {
 			System.out.println("실패");
 		}
 	}
+	
 	// 회원 비밀번호 수정
 	public void updateMemberPw(String memberId) {
 		System.out.println("=== 회원 비밀번호 수정 ===");
@@ -134,6 +135,7 @@ public class MemberMenu {
 			System.out.println("실패");
 		}
 	}
+	
 	// 회원 이메일 수정
 	public void updateMemberEmail(String memberId) {
 		System.out.println("=== 회원 이메일 수정 ===");

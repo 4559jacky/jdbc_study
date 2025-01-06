@@ -86,11 +86,11 @@ public class MemberDao {
 					+"set m_pw = '"+memberPw+"' "
 					+"where m_id = '"+memberId+"'";
 			result = stmt.executeUpdate(sql);
-			if(result>0) {
-				System.out.println("성공");
-			} else {
-				System.out.println("실패");
-			}
+//			if(result>0) {
+//				System.out.println("성공");
+//			} else {
+//				System.out.println("실패");
+//			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -122,11 +122,11 @@ public class MemberDao {
 					+"set m_name = '"+memberName+"' "
 					+"where m_id = '"+memberId+"'";
 			result = stmt.executeUpdate(sql);
-			if(result>0) {
-				System.out.println("성공");
-			} else {
-				System.out.println("실패");
-			}
+//			if(result>0) {
+//				System.out.println("성공");
+//			} else {
+//				System.out.println("실패");
+//			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -157,11 +157,11 @@ public class MemberDao {
 					+"set m_email = '"+memberEmail+"' "
 					+"where m_id = '"+memberId+"'";
 			result = stmt.executeUpdate(sql);
-			if(result>0) {
-				System.out.println("성공");
-			} else {
-				System.out.println("실패");
-			}
+//			if(result>0) {
+//				System.out.println("성공");
+//			} else {
+//				System.out.println("실패");
+//			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -193,11 +193,11 @@ public class MemberDao {
 					+"set m_phone = '"+memberPhone+"' "
 					+"where m_id = '"+memberId+"'";
 			result = stmt.executeUpdate(sql);
-			if(result>0) {
-				System.out.println("성공");
-			} else {
-				System.out.println("실패");
-			}
+//			if(result>0) {
+//				System.out.println("성공");
+//			} else {
+//				System.out.println("실패");
+//			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
