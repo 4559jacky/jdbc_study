@@ -162,6 +162,7 @@ public class MarketDao {
 		Connection conn = null;
 		PreparedStatement pstmt1 = null;
 		PreparedStatement pstmt2 = null;
+		PreparedStatement checkStmt = null;
 		int result1 = 0;
 		int result2= 0;
 		try {
@@ -174,17 +175,27 @@ public class MarketDao {
 			// 트랜잭션 시작
 			conn.setAutoCommit(false);
 			
+			// 현재 재고 확인
+	        String checkStockSql = "SELECT prod_amount FROM sm_product WHERE prod_no = ?";
+	        checkStmt = conn.prepareStatement(checkStockSql);
+	        checkStmt.setInt(1, prodNo);
+	        ResultSet rs = checkStmt.executeQuery();
+	        if (rs.next()) {
+	            int currentStock = rs.getInt("prod_amount");
+	            if (currentStock < prodAmount) {
+	                System.out.println("재고 부족: 현재 재고 " + currentStock + ", 요청 수량 " + prodAmount);
+	                return 0; // 재고 부족 시 함수 종료
+	            }
+	        }
+			
 			// 상품 수량 업데이트
-			String sql1 = "update sm_product set prod_amount = prod_amount - ? "
-					+ "where prod_no = ? ";
+			String sql1 = "UPDATE sm_product SET prod_amount = prod_amount - ? "
+		             + "WHERE prod_no = ? AND prod_amount >= ?";
 			pstmt1 = conn.prepareStatement(sql1);
 			pstmt1.setInt(1, prodAmount);
 			pstmt1.setInt(2, prodNo);
+			pstmt1.setInt(3, prodAmount); // 재고 조건 추가
 			result1 = pstmt1.executeUpdate();
-			
-			if (result1 == 0) {
-			    throw new Exception("재고가 부족합니다.");
-			}
 			
 			// 구매 기록 삽입
 			String sql2 = "insert into sm_buy(user_no, prod_no, buy_amount) values (?,?,?)";
@@ -196,7 +207,8 @@ public class MarketDao {
 			
 			// 트랜잭션 커밋
 			conn.commit();
-		}catch(Exception e) {
+		
+		} catch(Exception e) {
 			e.printStackTrace();
 			if(conn != null)
 				try {
