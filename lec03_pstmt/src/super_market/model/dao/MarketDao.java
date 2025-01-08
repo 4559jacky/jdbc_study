@@ -14,6 +14,63 @@ import super_market.model.vo.User;
 
 public class MarketDao {
 	
+	// 회원 탈퇴
+	public int deleteUser(User user) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/super_market";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			String sql = "delete from sm_user where user_id = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, user.getUser_id());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	// 닉네임 변경
+	public int editUserInfo(User user, String nickname) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/super_market";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			String sql = "Update sm_user set user_nickname = ? where user_id = ? ";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nickname);
+			pstmt.setString(2, user.getUser_id());
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
 	// 제품 등록
 	public int insertProduct(String prodName, int prodPrice, int prodAmount) {
 		Connection conn = null;

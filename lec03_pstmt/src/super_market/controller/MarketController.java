@@ -59,6 +59,18 @@ public class MarketController {
 		return result;
 	}
 	
+	// 닉네임변경
+	public int editUserInfo(User user, String nickname) {
+		int result = md.editUserInfo(user, nickname);
+		return result;
+	}
+	
+	// 회원 탈퇴
+	public int deleteUser(User user) {
+		int result = md.deleteUser(user);
+		return result;
+	}
+	
 	
 	
 	

@@ -171,6 +171,8 @@ public class MarketMenu {
 			sc.nextLine();
 			switch(menu) {
 				case 1 : buyProduct(user); break;
+				case 2 : editUserInfo(user); break;
+				case 3 : deleteUser(user);
 				case 0 : System.out.println("잘가용~ 안농~~"); return;
 				default : System.out.println("잘못된 번혼디용ㅠㅠ");
 			}
@@ -196,6 +198,41 @@ public class MarketMenu {
 		int result = mc.buyProduct(user, prodNo, prodAmount);
 		printResult(result, "제품 구매");
 	}
+	
+	// 개인 정보 수정
+	public void editUserInfo(User user) {
+		System.out.println("=== 개인 정보 수정 ===");
+		System.out.print("비밀번호를 입력하세요 : ");
+		String password = sc.next();
+		if(user.getUser_pw().equals(password)) {
+			System.out.print("수정할 닉네임 : ");
+			String nickname = sc.next();
+			int result = mc.editUserInfo(user, nickname);
+			printResult(result, "닉네임변경");
+		} else {
+			System.out.println("비밀번호가 일치하지 않습니다.");
+		}
+	}
+	
+	// 탈퇴
+	public void deleteUser(User user) {
+		System.out.println("=== 회원 탈퇴 ==");
+		System.out.print("비밀번호를 입력하세요 : ");
+		String password = sc.next();
+		if(user.getUser_pw().equals(password)) {
+			System.out.print("정말 탈퇴하시겠습니까?(Y/N) : ");
+			String answer = sc.next();
+			if("Y".equals(answer)) {
+				int result = mc.deleteUser(user);
+				printResult(result, "회원 탈퇴");
+			} else {
+				System.out.println("탈퇴를 취소하였습니다.");
+			}
+		} else {
+			System.out.println("비밀번호가 일치하지 않습니다.");
+		}
+	}
+	
 	
 	
 }
