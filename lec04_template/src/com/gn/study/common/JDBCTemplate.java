@@ -1,18 +1,23 @@
 package com.gn.study.common;
 
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.Properties;
 
 public class JDBCTemplate {
 	public static Connection getConnection() {
 		Connection conn = null;
 		try {
-			Class.forName("org.mariadb.jdbc.Driver");
-			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
-			String user = "scott";
-			String pw = "tiger";
+			Properties prop = new Properties();
+			prop.load(new FileInputStream("resources/db.properties"));
+			
+			Class.forName(prop.getProperty("driver"));
+			String url = prop.getProperty("url");
+			String user = prop.getProperty("user");
+			String pw = prop.getProperty("pw");
 			conn = DriverManager.getConnection(url,user,pw);
 		} catch(Exception e) {
 			e.printStackTrace();

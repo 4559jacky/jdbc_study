@@ -8,6 +8,23 @@ import com.gn.study.model.vo.Car;
 // View로부터 전달받은 데이터 가공 -> Service 전달
 public class Controller {
 	private Service service = new Service();
+	
+	public List<Car> searchCarList(int option, Object obj) {
+		List<Car> list = service.searchCarList(option, obj);
+		return list;
+	}
+	
+	public int deleteCarOne(int carNo) {
+		int result = service.deleteCarOne(carNo);
+		return result;
+	}
+	
+	// 수정
+	public int editCarOne(int carNo, String carModel, int carPrice, String carDate) {
+		int result = service.editCarOne(carNo, carModel, carPrice, carDate);
+		return result;
+	}
+	
 	public int insertCarOne(String modelName, int price, String date) {
 		Car car = new Car(modelName, price, date);
 		int result = service.insertCarOne(car);

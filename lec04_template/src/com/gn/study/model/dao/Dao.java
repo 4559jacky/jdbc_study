@@ -5,6 +5,7 @@ import static com.gn.study.common.JDBCTemplate.close;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,130 @@ import java.util.List;
 import com.gn.study.model.vo.Car;
 
 public class Dao {
+	
+	public int deleteCarOne(int carNo, Connection conn) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		try {
+			String sql = "delete from car where car_no = ?";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, carNo);
+			result = pstmt.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	// 수정
+	public int editCarOne(int carNo, String carModel, int carPrice, String carDate, Connection conn) {
+		Statement stmt = null;
+		int result = 0;
+		try {
+			String sql = "";
+			if(carModel!=null) {
+				if(carPrice!=0) {
+					if(carDate!=null) {
+						sql = "update car set car_model = '"+carModel
+									+"', car_price = "+carPrice
+									+", car_date = str_to_date('"+carDate+"', '%Y-%m-%d')"
+									+" where car_no = "+carNo;
+					} else {
+						sql = "update car set car_model = '"+carModel
+								+"', car_price = "+carPrice
+								+" where car_no = "+carNo;
+					}
+				} else {
+					if(carDate!=null) {
+						sql = "update car set car_model = '"+carModel
+								+"', car_date = str_to_date('"+carDate+"', '%Y-%m-%d')"
+								+" where car_no = "+carNo;
+					} else {
+						sql = "update car set car_model = '"+carModel
+								+"' where car_no = "+carNo;
+					}
+				}
+			} else if(carModel==null) {
+				if(carPrice!=0) {
+					if(carDate!=null) {
+						sql = "update car set car_price = "+carPrice
+								+", car_date = str_to_date('"+carDate+"', '%Y-%m-%d')"
+								+" where car_no = "+carNo;
+					} else {
+						sql = "update car set car_price = "+carPrice
+								+" where car_no = "+carNo;
+					}
+				} else {
+					if(carDate!=null) {
+						sql = "update car set car_date = str_to_date('"+carDate+"', '%Y-%m-%d')"
+								+" where car_no = "+carNo;
+					} else {
+						sql = "";
+					}
+				}
+			}
+			stmt = conn.createStatement();
+			result = stmt.executeUpdate(sql);
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(stmt != null) stmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	// 강사님버전 단일조회
+	public List<Car> searchCarList(Connection conn, int option , Object obj) {
+		Statement stmt = null;
+		ResultSet rs = null;
+		List<Car> list = new ArrayList<Car>();
+		try {
+			String sql = "select * from car where ";
+			switch(option) {
+				case 1:
+					sql = sql + "car_no = " + (Integer)obj; break;
+				case 2: 
+					sql = sql + "car_model = '" + (String)obj +"'"; break;
+				case 3: 
+					sql = sql + "car_price = " + (Integer)obj; break;
+				case 4: 
+					sql = sql + "car_date = '" + (String)obj +"'"; break;				
+			}
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery(sql);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			while(rs.next()) {
+				Car car = new Car();
+				car.setCarNo(rs.getInt("car_no"));
+				car.setCarModel(rs.getString("car_model"));
+				car.setCarPrice(rs.getInt("car_price"));
+				if(rs.getDate("car_date") != null) {
+					car.setCarDate(sdf.format(rs.getDate("car_date")));
+				} else {
+					car.setCarDate("null");
+				}
+				list.add(car);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			try {
+				if(stmt != null) stmt.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	
 	
 	public List<Car> selectCarAll(Connection conn) {
 		PreparedStatement pstmt = null;
