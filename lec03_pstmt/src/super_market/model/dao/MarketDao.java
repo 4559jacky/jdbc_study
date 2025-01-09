@@ -275,6 +275,7 @@ public class MarketDao {
 				}
 		} finally {
 			try {
+				conn.setAutoCommit(true);
 				if (pstmt2 != null) pstmt2.close();
 		        if (pstmt1 != null) pstmt1.close();
 		        if (conn != null) conn.close();
